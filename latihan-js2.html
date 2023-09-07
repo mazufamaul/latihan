@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        let pegawai = 'Ridwan';
+        let jabatan = 'Manager';
+        let status = 'Menikah';
+        let gajipokok = 0;
+
+       
+        switch(jabatan){
+            case 'Manager' : gajipokok = 15000000; break;
+            case 'Asisten Manager' : gajipokok = 10000000; break;
+            case 'Staff' : gajipokok = 5000000; break;
+            default:gajipokok = 0;
+        }
+       
+        let tunjanganjab = 0.15 * gajipokok;
+        let bpjs = 0.1 * gajipokok;
+        let tunjangankel = 0.2 * gajipokok;
+
+        let gajitotal = gajipokok + tunjanganjab + bpjs + tunjangankel;
+
+       /* if (jabatan == 'Manager' && status == 'Menikah'){
+            gajitotal = gajipokok + tunjanganjab + bpjs + tunjangankel;
+
+        } else if (jabatan == 'Asisten Manager' && status == 'Menikah'){
+            gajitotal = gajipokok + tunjanganjab + bpjs + tunjangankel;
+
+        } else if (jabatan == 'Staff' && status == 'Menikah'){
+            gajitotal = gajipokok + tunjanganjab + bpjs + tunjangankel;
+
+        } else {
+           false;
+        }
+        */
+
+        if (status == 'Menikah'){
+            if (jabatan == 'Manager'){
+            gajitotal = gajipokok + tunjanganjab + bpjs + tunjangankel;  
+            } else if ( jabatan == 'Asisten Manager'){
+            gajitotal = gajipokok + tunjanganjab + bpjs + tunjangankel;
+            } else{
+                gajitotal = gajipokok + tunjanganjab + bpjs + tunjangankel;
+            }  
+        } 
+
+        else if (status == ' '){
+            if (jabatan == 'Manager'){
+            gajitotal = gajipokok + tunjanganjab + bpjs ; 
+            } else if ( jabatan == 'Asisten Manager'){
+            gajitotal = gajipokok + tunjanganjab + bpjs ;
+            } else{
+                gajitotal = gajipokok + tunjanganjab + bpjs;
+            }  
+        } 
+
+        else {
+            false
+        }
+
+
+    
+        document.write("<br> Nama Pegawai : " + pegawai +
+        "<br> Jabatan : " + jabatan +
+        "<br> Status : " + status + 
+        "<br> Gaji pokok : " + gajipokok +
+        "<br> Tunjangan Jabatan : " +tunjanganjab+
+        "<br> Tunjangan keluarga : " + tunjangankel+
+        "<br><br> Gaji Total : " + gajitotal );
+    </script>
+
+
+</body>
+</html>
