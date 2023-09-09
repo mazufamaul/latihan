@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(odd) {
+            background-color: yellow;
+        }
+        tr:nth-child(even) {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Nama Pegawai</th>
+            <th>Jabatan</th>
+            <th>Gaji Pokok</th>
+            <th>Tunjangan Jabatan</th>
+            <th>Tunjangan Kesehatan</th>
+            <th>Gaji Kotor</th>
+            <th>Status Agama</th>
+            <th>Zakat Profesi</th>
+            <th>Take Home Pay</th>
+        </tr>
+
+        <script>
+            // Daftar nama pegawai dan gaji pokok
+            var pegawai = [
+                { nama: "Pegawai1", gaji_pokok: 15000000 },
+                { nama: "Pegawai2", gaji_pokok: 15000000 },
+                { nama: "Pegawai3", gaji_pokok: 10000000 },
+                { nama: "Pegawai4", gaji_pokok: 10000000 },
+                { nama: "Pegawai5", gaji_pokok: 10000000 },
+                { nama: "Pegawai6", gaji_pokok: 7000000 },
+                { nama: "Pegawai7", gaji_pokok: 7000000 },
+                { nama: "Pegawai8", gaji_pokok: 7000000 },
+                { nama: "Pegawai9", gaji_pokok: 4000000 },
+                { nama: "Pegawai10", gaji_pokok: 4000000 }
+            ];
+
+            for (var i = 0; i < pegawai.length; i++) {
+                var nama = pegawai[i].nama;
+                var gaji_pokok = pegawai[i].gaji_pokok;
+
+                // Menggunakan switch case untuk menghitung tunjangan
+                switch (true) {
+                    case (i < 2):
+                        var jabatan = "Manager";
+                        var tunjab = 0.2 * gaji_pokok;
+                        break;
+                    case (i >= 2 && i < 5):
+                        var jabatan = "Asisten Manager";
+                        var tunjab = 0.2 * gaji_pokok;
+                        break;
+                    case (i >= 5 && i < 8):
+                        var jabatan = "Supervisor";
+                        var tunjab = 0.2 * gaji_pokok;
+                        break;
+                    default:
+                        var jabatan = "Staff";
+                        var tunjab = 0.2 * gaji_pokok;
+                        break;
+                }
+
+                var tunkes = 0.1 * gaji_pokok; // Tunjangan Kesehatan
+                var gaji_kotor = gaji_pokok + tunjab + tunkes;
+
+                // Menggunakan ternary untuk menentukan agama dan zakat profesi
+                var agama = i % 2 === 0 ? "Non Muslim" : "Muslim";
+                var zakat_profesi = agama === "Muslim" && gaji_kotor >= 7000000 ? 0.025 * gaji_kotor : 0;
+
+                var take_home_pay = gaji_kotor - zakat_profesi;
+
+                // Membuat baris tabel HTML untuk setiap pegawai
+                document.write("<tr>");
+                document.write("<td>" + nama + "</td>");
+                document.write("<td>" + jabatan + "</td>");
+                document.write("<td>" + gaji_pokok + "</td>");
+                document.write("<td>" + tunjab + "</td>");
+                document.write("<td>" + tunkes + "</td>");
+                document.write("<td>" + gaji_kotor + "</td>");
+                document.write("<td>" + agama + "</td>");
+                document.write("<td>" + zakat_profesi + "</td>");
+                document.write("<td>" + take_home_pay + "</td>");
+                document.write("</tr>");
+            }
+        </script>
+    </table>
+</body>
+</html>
