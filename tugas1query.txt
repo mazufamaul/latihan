@@ -17,11 +17,23 @@ MariaDB [stupen]>
 3. buat database baru : dbpegawai
 -----------------------------------------
 MariaDB [stupen]> create database dbpegawai;
+MariaDB [stupen]> use dbpegawai;
 
 
 ----------------------------------------
 4. buat tabel pegawai field-field:
 ----------------------------------------
+
+MariaDB [dbpegawai]> create table pegawai (
+    -> id INT PRIMARY KEY,
+    -> nim CHAR(5) NOT NULL UNIQUE,
+    -> nama VARCHAR(30) NOT NULL,
+    -> gender ENUM('L','P') NOT NULL,
+    -> umur INT NOT NULL,
+    -> berat_badan FLOAT
+    -> );
+
+
 CREATE TABLE pegawai (
   id INT PRIMARY KEY,
   nip CHAR(5) NOT NULL UNIQUE,
