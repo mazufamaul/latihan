@@ -1,0 +1,48 @@
+----------------------------------------
+1. masuk ke ruang DB melalui CMD 
+----------------------------------------
+C:\Users\USER>cd \xampp\mysql\bin
+C:\xampp\mysql\bin>mysql -u root -p
+
+
+---------------------------------------
+2. tampilkan database yang sudah dibuat
+--------------------------------------
+MariaDB [(none)]> use stupen;
+Database changed
+MariaDB [stupen]>
+
+
+-----------------------------------------
+3. buat database baru : dbpegawai
+-----------------------------------------
+MariaDB [stupen]> create database dbpegawai;
+
+
+----------------------------------------
+4. buat tabel pegawai field-field:
+----------------------------------------
+CREATE TABLE pegawai (
+  id INT PRIMARY KEY,
+  nip CHAR(5) NOT NULL UNIQUE,
+  nama VARCHAR(30) NOT NULL,
+  gender ENUM('L','P') NOT NULL,
+  umur INT NOT NULL,
+  berat_badan FLOAT
+);
+
+------------------------------------------
+5. desc pegawai;
+------------------------------------------
+MariaDB [dbpegawai]> desc pegawai;
+
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| id          | int(11)       | NO   | PRI | NULL    |       |
+| nim         | char(5)       | NO   | UNI | NULL    |       |
+| nama        | varchar(30)   | NO   |     | NULL    |       |
+| gender      | enum('L','P') | NO   |     | NULL    |       |
+| umur        | int(11)       | NO   |     | NULL    |       |
+| berat_badan | float         | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
