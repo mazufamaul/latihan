@@ -1,0 +1,108 @@
+----------------------
+        SOAL 
+----------------------
+
+Buatlah table sebagai berikut 
+
+1. table pembelian yang references ke produk dengan rincian kolom sebagai berikut:
+
+- tanggal
+
+- nomor 
+
+- produk_id
+
+- jumlah
+
+- harga 
+
+- vendor_id
+
+2. table vendor yang references ke table pembelian, dengan rincian kolom sebagai berikut:
+
+- nomor
+
+- nama
+
+- kota
+
+- kontak
+
+
+
+isi 2 tabel berikut minimal 5 data
+
+----------------------------------------------------------------------
+
+
+
+
+MariaDB [stupen]> CREATE TABLE vendor (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     nomor VARCHAR(10) NOT NULL,
+    ->     nama VARCHAR(255) NOT NULL,
+    ->     kota VARCHAR(255) NOT NULL,
+    ->     kontak VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.011 sec)
+
+MariaDB [stupen]>
+
+MariaDB [stupen]> -- Mengisi tabel vendor dengan data
+MariaDB [stupen]> INSERT INTO vendor (nomor, nama, kota, kontak)
+    -> VALUES
+    ->     ('001', 'Asep_Vendor A', 'Jakarta', 'Asep_Vendor@gmail.com'),
+    ->     ('002', 'Yusuf_Vendor B', 'Surabaya', 'Yusuf_Vendor@gmail.com'),
+    ->     ('003', 'Zaki_Vendor C', 'Bandung', 'Zaki_Vendor@gmail.com'),
+    ->     ('004', 'Rinal_Vendor D', 'Yogyakarta', 'Rinal_Vendor@gmail.com'),
+    ->     ('005', 'Ujang_Vendor E', 'Medan', 'Ujang_Vendor@gmail.com');
+Query OK, 5 rows affected (0.003 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [stupen]> CREATE TABLE pembelian (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     tanggal DATE,
+    ->     nomor VARCHAR(10) NOT NULL,
+    ->     produk_id INT NOT NULL,
+    ->     jumlah INT NOT NULL,
+    ->     harga DECIMAL(10, 2) NOT NULL,
+    ->     vendor_id INT,
+    ->     FOREIGN KEY (vendor_id) REFERENCES vendor(id)
+    -> );
+Query OK, 0 rows affected (0.029 sec)
+
+MariaDB [stupen]>
+MariaDB [stupen]> -- Mengisi tabel pembelian dengan data
+MariaDB [stupen]> INSERT INTO pembelian (tanggal, nomor, produk_id, jumlah, harga, vendor_id)
+    -> VALUES
+    ->     ('2023-10-01', '001', 101, 10, 5000.00, 1),
+    ->     ('2023-10-02', '002', 102, 5, 7500.00, 2),
+    ->     ('2023-10-03', '003', 103, 8, 6000.00, 1),
+    ->     ('2023-10-04', '004', 104, 15, 4500.00, 3),
+    ->     ('2023-10-05', '005', 105, 20, 4000.00, 2);
+Query OK, 5 rows affected (0.006 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [stupen]> select * from pembelian;
++----+------------+-------+-----------+--------+---------+-----------+
+| id | tanggal    | nomor | produk_id | jumlah | harga   | vendor_id |
++----+------------+-------+-----------+--------+---------+-----------+
+|  1 | 2023-10-01 | 001  |       101 |     10 | 5000.00 |         1 |
+|  2 | 2023-10-02 | 002  |       102 |      5 | 7500.00 |         2 |
+|  3 | 2023-10-03 | 003  |       103 |      8 | 6000.00 |         1 |
+|  4 | 2023-10-04 | 004  |       104 |     15 | 4500.00 |         3 |
+|  5 | 2023-10-05 | 005  |       105 |     20 | 4000.00 |         2 |
++----+------------+-------+-----------+--------+---------+-----------+
+5 rows in set (0.000 sec)
+
+MariaDB [stupen]> select * from pembelian;
++----+------------+-------+-----------+--------+---------+-----------+
+| id | tanggal    | nomor | produk_id | jumlah | harga   | vendor_id |
++----+------------+-------+-----------+--------+---------+-----------+
+|  1 | 2023-10-01 | 001  |       101 |     10 | 5000.00 |         1 |
+|  2 | 2023-10-02 | 002  |       102 |      5 | 7500.00 |         2 |
+|  3 | 2023-10-03 | 003  |       103 |      8 | 6000.00 |         1 |
+|  4 | 2023-10-04 | 004  |       104 |     15 | 4500.00 |         3 |
+|  5 | 2023-10-05 | 005  |       105 |     20 | 4000.00 |         2 |
++----+------------+-------+-----------+--------+---------+-----------+
+5 rows in set (0.000 sec)
