@@ -1,0 +1,251 @@
+soal
+---------------------------------------------
+Isi data table pelanggan minimal 6 data lagi
+Isi data table produk minimal 5 data lagi
+Selesaikan worksheet 1 Tugas mandiri
+Selesaikan worksheet 2 (2.2, 2.3, 2.4)
+---------------------------------------------
+
+1.	Buat database 
+    MariaDB [(none)]> create database dbpos;
+
+2.	Gunakan Database dbpos
+    MariaDB [(none)]> use dbpos;
+
+3.	Buat table kartu
+    create table kartu(
+    -> id int auto_increment primary key,
+    -> kode varchar(6) unique,
+    -> nama varchar(30) not null,
+    -> diskon double,
+    -> iuran double);
+
+4.	Buat table pelanggan
+    create table pelanggan(
+    -> id int auto_increment primary key,
+    -> kode varchar(10) unique,
+    -> nama varchar(45),
+    -> jk char(1),
+    -> tmp_lahir varchar(30),
+    -> tgl_lahir date,
+    -> email varchar(45),
+    -> kartu_id int not null references kartu(id));
+
+5.	Buat table pesanan
+    create table pesanan(
+    -> id int not null auto_increment primary key,
+    -> tanggal date,
+    -> total double,
+    -> pelanggan_id int not null references pelanggan(id));
+
+6.	Buat table Pembayaran
+    create table pembayaran(
+    -> id int not null auto_increment primary key,
+    -> nokuitansi varchar(10) unique,
+    -> tanggal date,
+    -> jumlah double,
+    -> ke int,
+    -> pesanan_id int not null references pesanan(id));
+7.	Buat table Jenis_produk
+    create table jenis_produk(
+    -> id int not null auto_increment primary key,
+    -> nama varchar(45));
+
+8.  Buat table produk 
+    create table produk(
+    -> id int not null auto_increment primary key,
+    -> kode varchar(10),
+    -> nama varchar(45),
+    -> harga_beli double,
+    -> harga_jual double,
+    -> stok int,
+    -> min_stok int,
+    -> jenis_produk_id int not null references produk(id));
+    
+
+INSERT INTO pelanggan (kode, nama, jk, tmp_lahir, tgl_lahir, email, kartu_id)
+VALUES
+    ('PLG001', 'John Doe', 'L', 'Jakarta', '1990-05-15', 'johndoe@email.com', 1),
+    ('PLG002', 'Jane Smith', 'P', 'Surabaya', '1985-08-20', 'janesmith@email.com', 2),
+    ('PLG003', 'Michael Johnson', 'L', 'Bandung', '1992-03-10', 'michael@email.com', 3),
+    ('PLG004', 'Emily Davis', 'P', 'Yogyakarta', '1988-12-05', 'emily@email.com', 4),
+    ('PLG005', 'David Wilson', 'L', 'Semarang', '1995-07-25', 'david@email.com', 5),
+    ('PLG006', 'Sarah Lee', 'P', 'Medan', '1998-02-18', 'sarah@email.com', 6);
+
+
+
+INSERT INTO produk (kode, nama, harga_beli, harga_jual, stok, min_stok, jenis_produk_id)
+VALUES
+    ('PRD001', 'Laptop Acer', 5000000, 6000000, 20, 5, 1),
+    ('PRD002', 'Smartphone Samsung', 3000000, 3500000, 30, 10, 2),
+    ('PRD003', 'Printer HP', 1500000, 1800000, 15, 5, 3),
+    ('PRD004', 'Mouse Logitech', 200000, 250000, 50, 10, 4),
+    ('PRD005', 'Keyboard Razer', 300000, 350000, 25, 5, 5);
+
+
+
+INSERT INTO kartu (kode, nama, diskon, iuran)
+VALUES
+    ('KRT001', 'Kartu Silver', 0.05, 10000),
+    ('KRT002', 'Kartu Gold', 0.1, 15000),
+    ('KRT003', 'Kartu Platinum', 0.15, 20000),
+    ('KRT004', 'Kartu Diamond', 0.2, 25000),
+    ('KRT005', 'Kartu VIP', 0.25, 30000),
+    ('KRT006', 'Kartu Premium', 0.3, 35000),
+    ('KRT007', 'Kartu Elite', 0.35, 40000),
+    ('KRT008', 'Kartu Exclusive', 0.4, 45000),
+    ('KRT009', 'Kartu Corporate', 0.45, 50000),
+    ('KRT010', 'Kartu Business', 0.5, 55000);
+
+
+INSERT INTO pesanan (tanggal, total, pelanggan_id)
+VALUES
+    ('2023-10-01', 1500000, 1),
+    ('2023-10-02', 2500000, 2),
+    ('2023-10-03', 1800000, 3),
+    ('2023-10-04', 500000, 4),
+    ('2023-10-05', 3500000, 5),
+    ('2023-10-06', 2000000, 6),
+    ('2023-10-07', 1200000, 7),
+    ('2023-10-08', 900000, 8),
+    ('2023-10-09', 600000, 9),
+    ('2023-10-10', 3000000, 10);
+
+
+INSERT INTO pembayaran (nokuitansi, tanggal, jumlah, ke, pesanan_id)
+VALUES
+    ('INV001', '2023-10-01', 1500000, 1, 1),
+    ('INV002', '2023-10-02', 2500000, 1, 2),
+    ('INV003', '2023-10-03', 1800000, 1, 3),
+    ('INV004', '2023-10-04', 500000, 1, 4),
+    ('INV005', '2023-10-05', 3500000, 1, 5),
+    ('INV006', '2023-10-06', 2000000, 1, 6),
+    ('INV007', '2023-10-07', 1200000, 1, 7),
+    ('INV008', '2023-10-08', 900000, 1, 8),
+    ('INV009', '2023-10-09', 600000, 1, 9),
+    ('INV010', '2023-10-10', 3000000, 1, 10);
+
+INSERT INTO jenis_produk (nama)
+VALUES
+    ('Elektronik'),
+    ('Pakaian'),
+    ('Perhiasan'),
+    ('Makanan'),
+    ('Minuman');
+
+
+
+-----------------------------------------
+Selesaikan worksheet 1 Tugas mandiri
+
+8.	Buat table produk
+9.	Buat table pesanan_items
+10.	Buat table vendor
+11.	Buat table Pembelian
+
+------------------------------------------
+
+CREATE TABLE vendor (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(45),
+    alamat VARCHAR(100),
+    telepon VARCHAR(20)
+);
+
+CREATE TABLE pembelian (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tanggal DATE,
+    total DOUBLE,
+    vendor_id INT NOT NULL REFERENCES vendor(id)
+);
+
+
+CREATE TABLE pesanan_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pesanan_id INT NOT NULL REFERENCES pesanan(id),
+    produk_id INT NOT NULL REFERENCES produk(id),
+    jumlah INT,
+    harga DOUBLE
+);
+
+
+
+
+
+
+----------------------------------------------------------
+Selesaikan worksheet 2 (2.2, 2.3, 2.4)
+----------------------------------------------------------
+2.2
+
+
+1.	Tampilkan data produk yang stoknya 3 dan 10
+SELECT * from produk WHERE stok=3 OR stok=10;
+
+2.	Tampilkan data produk yang harga jualnya kurang dari 5 juta tetapi lebih dari 500 ribu
+SELECT * FROM produk WHERE harga_jual < 5000000 AND harga_jual > 500000;
+
+3.	Tampilkan data produk yang harus segera ditambah stoknya
+SELECT * FROM produk WHERE min_stok > stok;
+
+4.	Tampilkan data pelanggan mulai dari yang paling muda
+SELECT * FROM pelanggan ORDER BY tgl_lahir DESC;
+
+5.	Tampilkan data pelanggan yang lahirnya di Jakarta dan gendernya perempuan
+SELECT * FROM pelanggan WHERE tmp_lahir='jakarta' AND jk='P';
+
+6.	Tampilkan data pelanggan yang ID nya 2, 4 dan 6
+SELECT * from pelanggan WHERE id IN (2,4,6);
+
+7.	Tampilkan data produk yang harganya antara 500 ribu sampai 6 juta
+SELECT * FROM produk WHERE harga_jual >= 500000 AND harga_jual<= 6000000;
+
+
+
+
+2.3
+Mandiri
+
+1.	Tampilkan produk yang kode awalnya huruf K dan huruf M
+SELECT * FROM produk WHERE kode LIKE 'K%' OR kode LIKE 'M%';
+
+2.	Tampilkan produk yang kode awalnya bukan huruf M
+SELECT * FROM produk WHERE NOT kode LIKE 'M%';
+
+3.	Tampilkan produk-produk televisi
+SELECT * FROM produk WHERE nama LIKE '%televisi%';
+
+4.	Tampilkan pelanggan mengandung huruf 'SA'
+SELECT * FROM pelanggan WHERE nama LIKE '%SA%';
+
+5.	Tampilkan pelanggan yang lahirnya bukan di Jakarta dan mengandung huruf ‘yo‘
+SELECT * FROM pelanggan WHERE tmp_lahir NOT LIKE 'Jakarta' AND nama LIKE '%yo%';
+
+6.	Tampilkan pelanggan yang karakter huruf ke – 2 nya adalah A
+SELECT * FROM pelanggan WHERE SUBSTRING(nama, 2, 1) = 'A';
+
+
+
+
+
+
+2.4
+
+1.	Tampilkan 2 data produk termahal
+SELECT *FROM produk ORDER BY harga_beli DESC LIMIT 2;
+
+2.	Tampilkan produk yang paling murah
+SELECT * FROM produk ORDER BY harga_beli ASC LIMIT 1;
+
+3.	Tampilkan produk yang stoknya paling banyak
+SELECT * FROM produk ORDER BY stok DESC LIMIT 1;
+
+4.	Tampilkan dua produk yang stoknya paling sedikit
+SELECT * FROM produk ORDER BY stok ASC LIMIT 2;
+
+5.	Tampilkan pelanggan yang paling muda
+SELECT * FROM pelanggan ORDER BY tgl_lahir DESC LIMIT 1;
+
+6.	Tampilkan pelanggan yang paling tua
+SELECT * FROM pelanggan ORDER BY tgl_lahir ASC LIMIT 1;
+
