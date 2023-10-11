@@ -1,0 +1,151 @@
+
+TUGAS 1
+
+Lanjutkan soal yang ada di worksheet
+--------------------------------------------------------------------------
+SOAL 3.2
+
+1.	Berapa jumlah pelanggan yang tahun lahirnya 1998
+SELECT COUNT(*) AS jumlah_pelanggan_lahir_tahun_di_1998 FROM pelanggan WHERE YEAR(tgl_lahir) = 1998;
+
+2.	Berapa jumlah pelanggan perempuan yang tempat lahirnya di Jakarta
+SELECT COUNT(*) AS jumlah_pelanggan_perempuan_lahir_di_Jakarta FROM pelanggan WHERE jk = 'P' AND tmp_lahir = 'Jakarta';
+
+3.	Berapa jumlah total stok semua produk yang harga jualnya dibawah 10rb
+SELECT SUM(stok) AS total_stok_produk_harga_dibawah_10rb FROM produk WHERE harga_jual < 10000;
+
+4.	Ada berapa produk yang mempunyai kode awal K
+SELECT COUNT(*) AS jumlah_produk_dengan_kode_K FROM produk WHERE kode LIKE 'K%';
+
+5.	Berapa harga jual rata-rata produk yang diatas 1jt
+SELECT AVG(harga_jual) AS rata_rata_harga_jual_produk_di_atas_1jt FROM produk WHERE harga_jual > 1000000;
+
+6.	Tampilkan jumlah stok yang paling besar
+SELECT MAX(stok) AS jumlah_stok_terbesar FROM produk;
+
+7.	Ada berapa produk yang stoknya kurang dari minimal stok
+SELECT COUNT(*) AS jumlah_produk_dengan_stok_kurang_dari_minimal FROM produk WHERE stok < min_stok;
+
+8.	Berapa total asset dari keseluruhan produk
+SELECT SUM(harga_beli * stok) AS total_asset_produk FROM produk;
+
+
+
+
+SOAL 3.3
+-----------------------------------------------------------------------------------------------------------------------
+1.	Tampilkan data produk : id, nama, stok dan informasi jika stok telah sampai batas minimal atau kurang dari minimum stok dengan informasi SELECT id, nama, stok,
+    CASE
+        WHEN stok <= min_stok THEN 'segera belanja'
+        ELSE 'stok aman'
+    END AS status_stok
+FROM produk;
+
+
+2.	Tampilkan data pelanggan: id, nama, umur dan kategori umur : jika umur < 17 → ‘muda’ , 17-55 → ‘Dewasa’, selainnya ‘Tua’
+SELECT id, nama, 
+    CASE
+        WHEN YEAR(CURDATE()) - YEAR(tgl_lahir) < 17 THEN 'muda'
+        WHEN YEAR(CURDATE()) - YEAR(tgl_lahir) BETWEEN 17 AND 55 THEN 'Dewasa'
+        ELSE 'Tua'
+    END AS kategori_umur
+FROM pelanggan;
+
+
+3.	Tampilkan data produk: id, kode, nama, dan bonus untuk kode ‘TV01’ →’DVD Player’ , ‘K001’ → ‘Rice Cooker’ selain dari diatas ‘Tidak Ada’
+SELECT id, kode, nama,
+    CASE
+        WHEN kode = 'TV01' THEN 'DVD Player'
+        WHEN kode = 'K001' THEN 'Rice Cooker'
+        ELSE 'Tidak Ada'
+    END AS bonus
+FROM produk;
+
+
+
+SOAL 3.4
+-----------------------------------------------------------------------------------------------------------------
+1.	Tampilkan data statistik jumlah tempat lahir pelanggan
+2.	Tampilkan jumlah statistik produk berdasarkan jenis produk
+3.	Tampilkan data pelanggan yang usianya dibawah rata usia pelanggan
+4.	Tampilkan data produk yang harganya diatas rata-rata harga produk
+5.	Tampilkan data pelanggan yang memiliki kartu dimana iuran tahunan kartu diatas 90rb
+6.	Tampilkan statistik data produk dimana harga produknya dibawah rata-rata harga produk secara keseluruhan
+7.	Tampilkan data pelanggan yang memiliki kartu dimana diskon kartu yang diberikan diatas 3%
+
+
+
+TUGAS 2
+
+Ubah table berikut menjadi 1 NF dan 2 NF
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+id personel	 | nama	        | alamat        | kesatuan | agama	    |  no surat     |  mulai        | akhir         | kota       | wilayah
+-----------------------------------------------------------------------------------------------------------------------------------------------
+1	         |faiz fikri	| depok1	    | ad	   | islam	    |  st.001/2008	| 1/1/2008	    | 5/1/2008      | bandung    | wilayah II
+			 |		        |               |          |            |  st.030/2008	| 6/1/2009	    | 20/04/2011    | samarinda  | wilayah II
+			 |		        |               |          |            |  st.021/2011	| 21/01/2011    | 30/12/2014	| jakarta    | wilayah II
+-----------------------------------------------------------------------------------------------------------------------------------------------
+2	         |john sadewa	| bekasi timur  | ad	   | khatolik   |  st.002/2010	| 1/1/2010	    | 31/12/2010	| medan	     | wilayah I
+			 |		        |               |          |            |  st.001/2011	| 1/1/2011	    | 31/12/2011	| jakarta    | wilayah I
+-----------------------------------------------------------------------------------------------------------------------------------------------
+3	         |dewi sri	    | bogor	        | au	   | hindu	    |  st.002/2011  | 1/1/2011	    | 31/12/2012	| denpasar   | wilayah I
+-----------------------------------------------------------------------------------------------------------------------------------------------
+4	         |ahmad bayu	| jakarta timur	| al       | islam	    |  st.008/2011	| 1/1/2011	    | 31/12/2012	| jakarta    |	wilayah I
+-----------------------------------------------------------------------------------------------------------------------------------------------
+5	         |ike rahayu	| tangerang     | al	   | budha	    |  st.003/2009	| 1/1/2009	    | 31/12/2010	| yogyakarta | wilayah IV
+			 |		        |               |          |            |  st.100/2010	| 1/1/2010	    | 31/12/2011	| balikpapan | wilayah III
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+berikut adalah bentuk normalisasi menjadi 1 nf dan 2 nf
+
+
+TABEL 1 NF
+
+| id personel | nama        | alamat         | kesatuan | agama    | no surat   | mulai      | akhir      | kota       | wilayah   |
+|------------|-------------|----------------|----------|----------|------------|------------|------------|------------|-----------|
+| 1          | faiz fikri  | depok1         | ad       | islam    | st.001/2008| 1/1/2008   | 5/1/2008   | bandung    | wilayah II|
+| 1          | faiz fikri  | depok1         | ad       | islam    | st.030/2008| 6/1/2009   | 20/04/2011 | samarinda  | wilayah II|
+| 1          | faiz fikri  | depok1         | ad       | islam    | st.021/2011| 21/01/2011 | 30/12/2014 | jakarta    | wilayah II|
+| 2          | john sadewa | bekasi timur   | ad       | khatolik | st.002/2010| 1/1/2010   | 31/12/2010 | medan      | wilayah I |
+| 2          | john sadewa | bekasi timur   | ad       | khatolik | st.001/2011| 1/1/2011   | 31/12/2011 | jakarta    | wilayah I |
+| 3          | dewi sri    | bogor          | au       | hindu    | st.002/2011| 1/1/2011   | 31/12/2012 | denpasar   | wilayah I |
+| 4          | ahmad bayu  | jakarta timur  | al       | islam    | st.008/2011| 1/1/2011   | 31/12/2012 | jakarta    | wilayah I |
+| 5          | ike rahayu  | tangerang      | al       | budha    | st.003/2009| 1/1/2009   | 31/12/2010 | yogyakarta | wilayah IV|
+| 5          | ike rahayu  | tangerang      | al       | budha    | st.100/2010| 1/1/2010   | 31/12/2011 | balikpapan | wilayah III|
+
+
+TABEL 2 NF (PERSONEL)
+
+| id_personel | nama        | alamat         | kesatuan | agama    |
+|------------|-------------|----------------|----------|----------|
+| 1          | faiz fikri  | depok1         | ad       | islam    |
+| 2          | john sadewa | bekasi timur   | ad       | khatolik |
+| 3          | dewi sri    | bogor          | au       | hindu    |
+| 4          | ahmad bayu  | jakarta timur  | al       | islam    |
+| 5          | ike rahayu  | tangerang      | al       | budha    |
+
+
+TABEL 2 NF (SURAT)
+
+| id_personel | no_surat    | mulai       | akhir        | kota       | wilayah    |
+|------------|------------|------------|--------------|------------|------------|
+| 1          | st.001/2008| 1/1/2008   | 5/1/2008     | bandung    | wilayah II |
+| 1          | st.030/2008| 6/1/2009   | 20/04/2011   | samarinda  | wilayah II |
+| 1          | st.021/2011| 21/01/2011 | 30/12/2014   | jakarta    | wilayah II |
+| 2          | st.002/2010| 1/1/2010   | 31/12/2010   | medan      | wilayah I  |
+| 2          | st.001/2011| 1/1/2011   | 31/12/2011   | jakarta    | wilayah I  |
+| 3          | st.002/2011| 1/1/2011   | 31/12/2012   | denpasar   | wilayah I  |
+| 4          | st.008/2011| 1/1/2011   | 31/12/2012   | jakarta    | wilayah I  |
+| 5          | st.003/2009| 1/1/2009   | 31/12/2010   | yogyakarta | wilayah IV |
+| 5          | st.100/2010| 1/1/2010   | 31/12/2011   | balikpapan | wilayah III|
+
+
+
+
+
+
+
+
+
