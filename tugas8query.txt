@@ -1,0 +1,95 @@
+Buatlah view berdasarkan query yang menampilkan data berikut ini:
+
+1.	
+Pesanan	            Pelanggan	    Kartu
+id	tanggal	total	kode	nama	nama kartu	diskon
+
+2.	
+Pembelian	                        Produk	Vendor
+id	tanggal	nomor	jumlah	harga	nama	nama	Kontak
+		
+3.	
+Pesanan	            Pelanggan	Produk	        Jenis produk	Pesanan items
+id	tanggal	total	nama	    kode	nama	nama	        qty	harga_jual
+
+--------------------------------------------------------------------------------------------
+
+jawaban
+
+1. 
+CREATE VIEW pesanan_pelanggan_kartu
+AS SELECT pesanan.id, pesanan.tanggal, pesanan. total, pelanggan.kode, pelanggan.nama, 
+kartu.nama as nama_kartu, kartu.diskon
+FROM pesanan INNER JOIN pelanggan ON pesanan.pelanggan_id = pelanggan.id
+INNER JOIN kartu ON pelanggan.kartu_id = kartu.id;
+Select * FROM pesanan_pelanggan_kartu
+
+
+2.
+create view pembelian_produk_vendor
+as select pembelian.id, pembelian.tanggal, pembelian.nomor, pembelian.jumlah,
+pembelian.harga,
+produk.nama,
+vendor.nama as nama_vendor, vendor.kontak
+from pembelian inner join produk on pembelian.produk_id = produk.id
+inner join vendor on pembelian.vendor_id = vendor.id;
+
+
+3.
+create view pesanan_pelanggan
+as select pesanan.id, pesanan.tanggal, pesanan.total,
+pelanggan.nama as nama_pelanggan,
+produk.kode, produk.nama as nama_produk,
+jenis_produk.nama as nama_jenis_produk,
+pesanan_items.qty, pesanan_items.harga as harga_jual
+from pesanan inner join
+pelanggan on pesanan.pelanggan_id = pelanggan.id inner join
+produk    on pelanggan.kartu_id = produk.id     inner join
+jenis_produk on produk.id = jenis_produk.id inner join
+pesanan_items on jenis_produk.id = pesanan_items.id;
+
+
+
+--------------------------------
+SOAL 2
+
+1.	Buatlah sebuah transaction dengan skenario-skenario statement sebagai berikut:
+●	Mulai transaction
+●	Insert data produk sebanyak 3 record
+●	Update data stok salah satu produk
+●	Buat savepoint
+●	Hapus salah satu data pembayaran
+●	Kembali ke savepoint
+●	Update data iuran salah satu kartu
+●	Akhiri transaction dengan commit
+
+
+
+-- Mulai transaksi
+START TRANSACTION;
+
+-- Insert 3 records ke tabel produk
+INSERT INTO produk (kode, nama, harga_beli, harga_jual, stok, min_stok, jenis_produk_id)
+VALUES
+    ('TV03', 'Televisi 55 inch', 7500000, 9900000, 7, 2, 1),
+    ('M002', 'Meja Belajar', 200000, 300000, 5, 3, 2),
+    ('PC02', 'PC Desktop Dell', 8000000, 10500000, 8, 2, 5);
+
+-- Update data stok salah satu produk
+UPDATE produk SET stok = 6 WHERE id = 1;
+
+-- Buat savepoint
+SAVEPOINT sp1;
+
+-- Hapus salah satu data pembayaran
+DELETE FROM pembayaran WHERE id = 2;
+
+-- Kembali ke savepoint
+ROLLBACK TO sp1;
+
+-- Update data iuran salah satu kartu
+UPDATE kartu SET iuran = 125000 WHERE id = 2;
+
+-- Akhiri transaksi dengan commit
+COMMIT;
+
