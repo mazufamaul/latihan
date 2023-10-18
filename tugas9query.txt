@@ -1,0 +1,92 @@
+FUNCTION 
+--------
+1.	Buat fungsi kategori_harga dengan parameter yang menerima inputan argument tipe data double dan mengembalikan tipe data string kategori harga berdasarkan: 
+●	0 – 500rb : murah
+●	500rb – 3 juta : sedang
+●	3jt – 10 juta : mahal 
+●	> 10 juta : sangat mahal
+
+
+
+
+
+TRIGGER
+-------
+
+2.	Buatlah Stored Procedure dengan nama kurangi_stok untuk mengurangi stok produk. Stok berkurang sesuai dengan jumlah pesanan produk.
+3.	Buatlah Trigger dengan nama trig_kurangi_stok yang akan mengurangi stok produk jika terjadi transaksi pesanan oleh pelanggan (memanggil stored procedure kurangi_stok soal no 1).
+Trigger ini aktif setelah trigger after_pesanan_items_insert (trigger pada contoh 3).
+
+
+
+
+        JAWABAN
+-------------------------
+
+
+1.
+delimiter $$
+create function kategori_harga (harga double)
+return varchar(20)
+begin
+
+declare kategori varchar(20);
+
+if harga <= 500000 then set kategori = 'murah';
+else if harga <= 3000000 then set kategori = 'sedang';
+else if harga <= 10000000 then set kategori = 'mahal';
+else set kategori = 'sangat mahal';
+end if;
+
+return kategori;
+
+delimiter ;
+end $$
+
+select kategori_harga(4000000) as kategori;
+
+
+2.
+delimiter $$
+
+create procedure kurangi_stok(
+    in produk_id int,
+    in jumlah_pesanan int
+)
+
+begin
+declare stok_sekarang int ;
+
+//mengambil stok saat ini dari tabel
+select stok into stok_sekarang from produk where produk_id = produk_id;
+
+//mengurangi  stok berdasarkan jml pesanan
+set stok_sekarang = stok_sekarang - jumlah_pesanan;
+
+//memperbarui stok dalam tabel produk
+update produk set stok = stok_sekarang where produk_id = produk_id;
+
+end $$
+delimiter ;
+
+call kurangi_stok(1,5);
+
+
+
+
+3.
+delimiter $$
+
+create trigger trigger_kurangi_stok
+after insert on pesanan_items for each row
+begin
+// memanggil stored procedure kurangi_stok dengan paramater
+call kurangi_stok(new.produk_id, new.jumlah_pesanan);
+end $$
+
+delimiter;
+
+
+
+
+
