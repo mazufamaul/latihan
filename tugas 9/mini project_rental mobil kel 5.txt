@@ -1,0 +1,35 @@
+	Alur kerja website Rental mobil
+=====================================
+
+1.Pemesanan (User)
+-------------------------------------------------
+User menjadi pengunjung lalu bisa melakukan 
+proses peminjaman mobil dengan memasukkan : 
+ 1. identitas diri
+ 2. Pilihan mobil
+ 3. Perjalanan
+ 4. jenis bayar 
+ 5. dll
+
+
+2.Admin
+------------------------------------------------
+ - Admin melakukan login 
+ - Admin dapat melihat data yang baru masuk dari sisi user
+ - Lalu admin verifikasi untuk peminjaman
+ - Admin dapat memantau lewat gps tracker
+	
+
+============= Relasi antar tabel ===================
+1.Tabel mobil berelasi dengan merk mobil 
+  dengan hubungan one to many satu merk mobil memiliki banyak mobil
+
+2.Tabel pengguna berelasi dengan tabel pesanan 
+3.Tabel Pemesan  berelasi dengan tabel pesanan
+4.Tabel Jenis bayar berelasi dengan tabel pesanan
+5.Tabel perjalanan berelasi dengan tabel pesanan
+dengan relasi one to many ke table pesanan
+
+
+
+
